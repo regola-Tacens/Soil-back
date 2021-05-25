@@ -14,6 +14,17 @@ const createPicture = async (req,res) => {
     }
 
 }
+const updatePicture = async (req,res) => {
+    const { id } = req.params
+    const { pictureName, description,img, themeLinked, creator } = req.body
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+
+    const updatedPicture = { pictureName, description, img,themeLinked, creator, _id : req.params.id}
+    await pictureModel.findByIdAndUpdate(id, updatedPicture, { new:true})
+    res.json(updatedPicture);
+
+}
+
 
 const fetchPictures = async (req,res) => {
     const  {themeId} = req.params;
@@ -27,8 +38,18 @@ const fetchPictures = async (req,res) => {
     }
 }
 
+const erasePicture = async (req,res) => {
+    const { id } = req.params;
+    try {
+        await pictureModel.findByIdAndDelete(id)
+        res.json({message : 'Picture deleted successfully'}); 
+    } catch (err) {
+        res.status(404).json({ message : err})
+    }
+}
+
+
 const erasePicturesLinked = async (req, res) => {
-    console.log('req.params.themeId',req.params.themeId)
     try {
         await pictureModel.deleteMany({themeLinked : req.params.themeId})
         res.json({message : 'Pictures deleted successfully'}); 
@@ -40,6 +61,8 @@ const erasePicturesLinked = async (req, res) => {
 module.exports = {
     createPicture: createPicture,
     fetchPictures: fetchPictures,
-    erasePicturesLinked : erasePicturesLinked
+    erasePicturesLinked : erasePicturesLinked, 
+    updatePicture: updatePicture,
+    erasePicture : erasePicture
 }
 

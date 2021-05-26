@@ -9,9 +9,9 @@ const pictureSchema = mongoose.Schema ({
         type : Date,
         default : new Date(),
     },
-    themeLinked : String
-    
+    themeLinked : String   
 })
 
-
 module.exports = mongoose.model('pictureModel', pictureSchema)
+
+

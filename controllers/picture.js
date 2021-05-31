@@ -58,11 +58,19 @@ const erasePicturesLinked = async (req, res) => {
     }
 }
 
+const fetchAllTags = async (req,res) => {
+    const pictureId = req.params.pictureId
+    const allTags = await pictureModel.find({_id : pictureId}).populate("tags")
+
+    res.status(200).json(allTags)
+}
+
 module.exports = {
     createPicture: createPicture,
     fetchPictures: fetchPictures,
     erasePicturesLinked : erasePicturesLinked, 
     updatePicture: updatePicture,
-    erasePicture : erasePicture
+    erasePicture : erasePicture,
+    fetchAllTags : fetchAllTags
 }
 

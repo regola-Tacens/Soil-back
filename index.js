@@ -5,6 +5,7 @@ const cors = require('cors')
 const userRouter = require ('./Routes/user.js')
 const themeRouter = require ('./Routes/theme.js')
 const pictureRouter = require ('./Routes/picture.js')
+const tagRouter = require ('./Routes/tag.js')
 
 const app = express()
 
@@ -26,6 +27,7 @@ con.on('open', () => {
 app.use('/user', userRouter )
 app.use('/theme', themeRouter)
 app.use('/picture', pictureRouter)
+app.use('/tag', tagRouter)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, ()=>{

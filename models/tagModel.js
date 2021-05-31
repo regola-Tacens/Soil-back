@@ -1,4 +1,6 @@
 const mongoose = require ('mongoose')
+const { Schema } = require ('mongoose')
+const pictureModel = require ('../models/pictureModel.js')
 
 const tagSchema = mongoose.Schema ({
     posX : Number,
@@ -9,6 +11,11 @@ const tagSchema = mongoose.Schema ({
         type : Date,
         default : new Date(),
         },
+    pictureLink : {
+        type : Schema.Types.ObjectId,
+        ref : "pictureModel"
+    }
     })
     
  module.exports = mongoose.model('tagModel', tagSchema)
+

@@ -65,12 +65,29 @@ const fetchAllTags = async (req,res) => {
     res.status(200).json(allTags)
 }
 
+const eraseTagInPicture = async (req,res) => {
+    const pictureId = req.params.pictureId
+    const tagToErase = Object.keys(req.body)[0]
+    // const newPicture = { tags : tags.filter(tag => tag !== tagToErase )}
+    try {
+             const updatedPicture = await pictureModel.findByIdAndUpdate(pictureId,{ $pull : { tags : tagToErase  }}, 
+            { new : true, useFindAndModify : false})
+            res.status(200).json(updatedPicture)
+
+    } catch (err) {
+        res.status(404).json({ message : err})
+        
+    }
+    
+}
+
 module.exports = {
     createPicture: createPicture,
     fetchPictures: fetchPictures,
     erasePicturesLinked : erasePicturesLinked, 
     updatePicture: updatePicture,
     erasePicture : erasePicture,
-    fetchAllTags : fetchAllTags
+    fetchAllTags : fetchAllTags,
+    eraseTagInPicture : eraseTagInPicture
 }
 

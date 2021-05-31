@@ -32,8 +32,24 @@ const createTag = async (req,res) => {
 }
 
 
+const eraseTag = async (req, res) => {
+    const id = req.params.tagId
+
+    try {
+        await tagModel.findByIdAndDelete(id)
+        res.json({message : 'Tag deleted successfully'}); 
+        
+    } catch (err) {
+        res.status(404).json({ message : err.message})
+        
+    }
+
+}
+
+
 
 module.exports = {
     createTag: createTag,
+    eraseTag: eraseTag
 }
 
